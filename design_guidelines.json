@@ -1,0 +1,101 @@
+{
+  "project_name": "JanNyaya",
+  "theme_and_archetype": {
+    "theme": "Dark",
+    "archetype": "Archetype 5 (Luxury) mixed with Archetype 4 (Swiss Authority)",
+    "description": "Deep emerald/ink black with antique gold accents to convey a luxurious, trustworthy, and modern Indian legal tech aesthetic."
+  },
+  "design_system": {
+    "colors": {
+      "background": "#0A0B0E",
+      "surface": "#111413",
+      "surfaceHover": "#1A201E",
+      "border": "#242E2A",
+      "primary": "#D4AF37",
+      "primaryHover": "#E5C158",
+      "textPrimary": "#EAEAEA",
+      "textSecondary": "#8B9B96",
+      "error": "#FF6B6B"
+    },
+    "typography": {
+      "heading_font": "Cormorant Garamond",
+      "body_font": "Outfit",
+      "rules": [
+        "Headings must use Cormorant Garamond with tracking-tight",
+        "Body text, UI elements, and chat content must use Outfit",
+        "Avoid pure white text, use #EAEAEA for primary readability",
+        "Markdown headings in AI responses must use the serif font"
+      ]
+    },
+    "spacing_and_radius": {
+      "radius_base": "8px",
+      "radius_lg": "12px",
+      "spacing_scale": "Tailwind default, use generous padding (p-6, p-8) for empty states"
+    }
+  },
+  "layout_breakdown": {
+    "sidebar": {
+      "width": "260px on desktop",
+      "behavior": "Collapsible on mobile via hamburger menu",
+      "sections": [
+        "Top: Brand 'JanNyaya' in Serif text, Gold Accent + 'New Chat' ghost button",
+        "Middle: Search bar with subtle #1A201E background, followed by Chat History list (grouped by time)",
+        "Bottom: Minimal user settings or 'Anonymous Session' indicator"
+      ]
+    },
+    "chat_area": {
+      "structure": "Flex-1 column layout",
+      "header": "Sticky top with mobile sidebar toggle and current context title",
+      "message_list": "Scrollable area, centered max-w-3xl container for readability",
+      "ai_message": "Transparent background, left-aligned, avatar is a minimal gold scale icon",
+      "user_message": "Right-aligned, background #1A201E, rounded-2xl with border-bottom-right-radius smaller",
+      "input_area": "Fixed bottom, blurred glassmorphism background (backdrop-blur-xl bg-[#0A0B0E]/80)"
+    },
+    "empty_state": {
+      "alignment": "Center of the screen",
+      "icon": "Large abstract scale or Lucide 'Scale' icon in gold",
+      "heading": "How can JanNyaya assist you today?",
+      "suggested_prompts": [
+        "Explain the Indian Penal Code (IPC) Section 420.",
+        "What are my rights as a tenant in Mumbai?",
+        "Draft a consumer complaint for a defective product.",
+        "Summarize the latest Right to Information (RTI) guidelines."
+      ],
+      "prompt_card_style": "1px solid border #242E2A, hover:bg-[#1A201E] transition-colors, text-left"
+    }
+  },
+  "micro_interactions": {
+    "typing_indicator": "Three small gold dots bouncing sequentially or 'JanNyaya is thinking...' with a gentle pulse animation",
+    "message_appearance": "Framer Motion: initial { opacity: 0, y: 10 } animate { opacity: 1, y: 0 }",
+    "hover_effects": "Sidebar items translate-x-1 on hover. Buttons have a subtle glow or brightness increase."
+  },
+  "media_urls": {
+    "lady_justice_bg": "https://images.unsplash.com/photo-1589994965851-a8f479c573a9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzd8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGdvbGQlMjBzY2FsZSUyMGp1c3RpY2V8ZW58MHx8fHwxNzgzMTg5NTMxfDA&ixlib=rb-4.1.0&q=85",
+    "usage_note": "Can be used as a heavily darkened, low-opacity background for the empty state, or strictly rely on typography if the image distracts."
+  },
+  "testing": {
+    "data_testids": [
+      "new-chat-button",
+      "chat-input-textarea",
+      "send-message-button",
+      "file-upload-button",
+      "sidebar-toggle",
+      "suggested-prompt-card",
+      "message-bubble-user",
+      "message-bubble-ai"
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Use ONLY .js files for React components, NOT .tsx.",
+    "Implement the UI using React, Tailwind CSS, and Shadcn UI components (customized for the dark theme).",
+    "Configure tailwind.config.js with the custom colors provided in the design_system.",
+    "Import and apply Google Fonts: 'Cormorant Garamond' and 'Outfit' in index.css.",
+    "Install and use 'lucide-react' for icons.",
+    "Install and use 'framer-motion' for staggered message appearances and typing indicators.",
+    "Ensure the sidebar is responsive (hidden behind a hamburger menu on mobile).",
+    "Use react-markdown for rendering AI responses, styling the typography properly with tailwind typography plugin or custom classes.",
+    "Set up a mockup or integration for file upload (PDF/images) showing small chips above the input box when a file is selected.",
+    "Include an 'Anonymous Session' note since there is no authentication in Phase 1.",
+    "Do NOT use pure black (#000000) or pure white (#FFFFFF). Stick to the specified custom hex codes."
+  ]
+}
