@@ -1,0 +1,37 @@
+{
+  "summary": "First-finish testing of JanNyaya. Backend all 6 tested endpoints pass (root, create/list/get/delete chat, SSE streaming, upload PDF success + DOCX 400 reject, search filter). Frontend main flow passes: empty state with 4 suggested prompt cards, click creates chat and routes to /c/{id}, typing indicator appears, SSE streams, markdown renders as HTML (h1 tags present, no raw markdown chars), New Chat resets to home, send button disabled when empty, 0 console errors. One concern: sidebar chat list did not display the created chat via data-testid='chat-list-item' selector.",
+  "tested_scope": ["backend", "frontend", "integration"],
+  "passed": [
+    "GET /api/ returns {app:'JanNyaya', status:'ok'}",
+    "POST /api/chats creates chat with id and session_id",
+    "GET /api/chats?session_id=X lists chats; ?q=IPC filters correctly (1 match), ?q=nomatch returns 0",
+    "GET /api/chats/{id} returns full chat; unknown id returns 404",
+    "DELETE /api/chats/{id} removes chat (deleted:1) and list becomes empty",
+    "POST /api/message/stream streams SSE 'data: {t: ...}' chunks, ends with 'event: done'; persists user+assistant messages; auto-sets title from first user message ('Define IPC 302 in one sentence')",
+    "POST /api/upload PDF returns extracted_text; DOCX rejected with 400",
+    "Frontend loads with 'How can JanNyaya assist you today?' and 4 suggested-prompt-card elements",
+    "Clicking suggested prompt: URL becomes /c/{uuid}, typing-indicator appears, stream completes, response rendered as HTML markdown (h1) not raw markdown",
+    "new-chat-button navigates back to '/' with empty state",
+    "send-message-button is disabled when composer is empty",
+    "No console errors during full chat flow"
+  ],
+  "failed": [
+    {
+      "area": "Frontend - Sidebar",
+      "issue": "After successfully creating a chat (URL is /c/{id}, backend confirms chat exists), sidebar query for data-testid='chat-list-item' returns 0 items. Sidebar UI shows 'No conversations yet. Start a new chat to begin.' The search filter test and delete-chat test could therefore not be exercised through the UI. Backend search /api/chats?q= itself works.",
+      "evidence": "TEST-6 sidebar chat items: 0 (right after streaming completed and while URL=/c/a50509d4-...); backend list returned 1 chat. Screenshot shows sidebar 'No conversations yet.'",
+      "priority": "MEDIUM"
+    }
+  ],
+  "action_items": [
+    "Verify Sidebar.js refreshes chat list after new chat creation / after streaming completes (call refresh in ChatPage after createChat or after stream end). Alternatively confirm data-testid='chat-list-item' is applied on each rendered chat row.",
+    "Once sidebar refresh is fixed, retest search filter via UI and hover-delete flow."
+  ],
+  "success_rate": {"backend": "100%", "frontend": "~85%"},
+  "retest_needed": true,
+  "full_testing_deferred": true,
+  "notes": {
+    "not_tested_ui": ["file upload chip via UI (backend upload verified)", "mobile responsive sidebar toggle", "Shift+Enter newline vs Enter send", "hover-delete flow (sidebar item not visible)"],
+    "test_credentials": "N/A - anonymous session app, no auth"
+  }
+}
